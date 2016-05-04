@@ -1,8 +1,10 @@
-## makeCacheMatrix: sets up the functionality to cache an inverted matrix for later use
-## cacheSolve: inverts the matrix, if inverse doesn't already exist
+## makeCacheMatrix: sets up the structore to store a matrix and its inverse
+##    also creates the getters/setters for getting the matrices back out
+## cacheSolve: inverts the matrix if inverse doesn't already exist
 
+## makeCacheMatris:
 ## default value of the output matrix as NULL
-## setmatrix: sets the input matrix into x and resets m to NULL
+## setmatrix: sets the input matrix into x and resets defaut to NULL
 ## get: returns the data currently in the function
 ## setinv: saves the inverted matrix provided
 ## getinv: returns the inverted matrix
@@ -17,23 +19,22 @@ makeCacheMatrix <- function(x = matrix()) {
   get <- function() x
   setinv <- function(val) m <<- val
   getinv <- function() m
-  ischanged <-function(val){
-    !identical(val,x,ignore.environment = TRUE) 
-  }
+
   list(setmatrix = setmatrix, 
        get = get,
        setinv = setinv,
-       getinv = getinv,
-       ischanged = ischanged)
+       getinv = getinv)
 }
 
 
-## cacheSolve: caches the result of inverting the function
+## cacheSolve: caches the result of inverting the matrix stored
+## in the data container makeCacheMatrix
+## input variable x is an instance of makeCacheMatrix
 ## if cached result does not exist, it does the inversion
+## on the matrix stored in x
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-  if(x$ischanged(x)) message("new matrix")
+  ## Return a matrix that is the inverse of the one stored in 'x'
   m <- x$getinv()
   if(!is.null(m)) {
     message("getting cached data")
